@@ -1,0 +1,71 @@
+'Passcreator.GenerativeEngineOptimization:LLMMetadata':
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        llm:
+          label: 'LLM Metadata'
+          position: 100
+          icon: 'icon-robot'
+          tab: 'meta'
+  properties:
+    llmDescription:
+      type: string
+      ui:
+        label: 'LLM Description'
+        help:
+          message: 'Custom description for llms.txt. If empty, the regular meta description will be used.'
+        reloadIfChanged: false
+        inspector:
+          group: 'llm'
+          editor: 'Neos.Neos/Inspector/Editors/TextAreaEditor'
+          editorOptions:
+            rows: 5
+            placeholder: 'Enter a description optimized for AI/LLMs...'
+    llmContext:
+      type: string
+      ui:
+        label: 'Additional LLM Context'
+        help:
+          message: 'Additional context or detailed information for llms.txt (optional).'
+        reloadIfChanged: false
+        inspector:
+          group: 'llm'
+          editor: 'Neos.Neos/Inspector/Editors/TextAreaEditor'
+          editorOptions:
+            rows: 8
+            placeholder: 'Add detailed context about this page for LLMs...'
+    llmIncludeInOptional:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: 'Include in Optional Section'
+        help:
+          message: 'Include this page in the optional section of llms.txt'
+        reloadIfChanged: false
+        inspector:
+          group: 'llm'
+    llmIncludeFullContent:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: 'Include Full Content in llms-full.txt'
+        help:
+          message: 'Include the full content of this page in llms-full.txt (when using selective inclusion)'
+        reloadIfChanged: false
+        inspector:
+          group: 'llm'
+    llmExcludeFromFullContent:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: 'Exclude from llms-full.txt'
+        help:
+          message: 'Exclude this page from llms-full.txt entirely'
+        reloadIfChanged: false
+        inspector:
+          group: 'llm'
+
+'Neos.Neos:Document':
+  superTypes:
+    'Passcreator.GenerativeEngineOptimization:LLMMetadata': true

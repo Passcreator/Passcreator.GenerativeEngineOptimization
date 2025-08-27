@@ -1,0 +1,307 @@
+Passcreator:
+  GenerativeEngineOptimization:
+    storage:
+      collection: 'persistent'
+    
+    # Fallback content when no content is available
+    fallbacks:
+      siteDescription: 'A website built with Neos CMS'
+      homePageTitle:
+        en: 'Homepage'
+        de: 'Startseite'
+        fr: 'Accueil'
+        es: 'Página de inicio'
+    
+    # Language detection configuration
+    languageDetection:
+      strategy: 'path' # Options: path, domain, header, dimension, auto
+      defaultLanguage: 'en'
+      pathPatterns:
+        en: ['/en/', '/english/']
+        de: ['/de/', '/deutsch/', '/german/']
+        fr: ['/fr/', '/francais/', '/french/']
+        es: ['/es/', '/espanol/', '/spanish/']
+      domainMappings: # For domain-based detection
+        # 'example.com': 'en'
+        # 'beispiel.de': 'de'
+      headerMappings: # For header-based detection  
+        # 'en-US': 'en'
+        # 'de-DE': 'de'
+    
+    # Flexible page categorization system
+    categorization:
+      # Default category for unmatched pages
+      defaultCategory: 'Other Resources'
+      
+      # Category definitions with flexible matching rules
+      categories:
+        'Main Pages':
+          priority: 5
+          matchers:
+            - type: 'parentRelation'
+              relation: 'directChild' # Direct child of site root
+            - type: 'nodeType'
+              types: ['Your.Package:HomePage', 'Your.Package:LandingPage']
+        
+        'Features':
+          priority: 10
+          matchers:
+            - type: 'path'
+              patterns: ['/features/', '/feature/']
+            - type: 'nodeType'
+              types: ['Your.Package:FeaturePage']
+            - type: 'property'
+              property: 'category'
+              values: ['feature', 'features']
+        
+        'Solutions':
+          priority: 20
+          matchers:
+            - type: 'path'
+              patterns: ['/solutions/', '/solution/']
+            - type: 'nodeType'
+              types: ['Your.Package:SolutionPage']
+            - type: 'property'
+              property: 'pageType'
+              values: ['solution']
+        
+        'API Documentation':
+          priority: 30
+          matchers:
+            - type: 'path'
+              patterns: ['/api/', '/docs/', '/documentation/']
+            - type: 'nodeType'
+              types: ['Your.Package:ApiPage', 'Your.Package:DocumentationPage']
+        
+        'Pricing':
+          priority: 40
+          matchers:
+            - type: 'path'
+              patterns: ['/pricing/', '/prices/', '/plans/']
+            - type: 'nodeType'
+              types: ['Your.Package:PricingPage']
+            - type: 'property'
+              property: 'pageType'
+              values: ['pricing', 'plans']
+        
+        'Company':
+          priority: 50
+          matchers:
+            - type: 'path'
+              patterns: ['/about/', '/company/', '/team/', '/contact/']
+            - type: 'nodeType'
+              types: ['Your.Package:AboutPage', 'Your.Package:CompanyPage']
+        
+        'News & Blog':
+          priority: 60
+          matchers:
+            - type: 'path'
+              patterns: ['/news/', '/blog/', '/articles/']
+            - type: 'nodeType'
+              types: ['Your.Package:NewsPage', 'Your.Package:BlogPage', 'Your.Package:ArticlePage']
+    
+    # Content grouping for llms-full.txt
+    fullContentGrouping:
+      'Core Features':
+        priority: 10
+        matchers:
+          - type: 'path'
+            patterns: ['/features/']
+          - type: 'nodeType'
+            types: ['Your.Package:FeaturePage']
+          - type: 'property'
+            property: 'llmGroup'
+            values: ['core-features']
+      
+      'Solutions & Use Cases':
+        priority: 20
+        matchers:
+          - type: 'path'
+            patterns: ['/solutions/', '/use-cases/']
+          - type: 'nodeType'
+            types: ['Your.Package:SolutionPage', 'Your.Package:UseCasePage']
+      
+      'API & Developer Resources':
+        priority: 30
+        matchers:
+          - type: 'path'
+            patterns: ['/api/', '/docs/', '/developers/']
+          - type: 'nodeType'
+            types: ['Your.Package:ApiPage', 'Your.Package:DocumentationPage']
+      
+      'Company Information':
+        priority: 40
+        matchers:
+          - type: 'path'
+            patterns: ['/about/', '/company/', '/team/']
+          - type: 'nodeType'
+            types: ['Your.Package:AboutPage', 'Your.Package:CompanyPage']
+      
+      'Other Resources':
+        priority: 100 # Catchall category
+        matchers:
+          - type: 'always' # Always matches - catchall
+    
+    # Translation system for section titles
+    translations:
+      'Main Pages':
+        en: 'Main Pages'
+        de: 'Hauptseiten'
+        fr: 'Pages Principales'
+        es: 'Páginas Principales'
+      
+      'Features':
+        en: 'Features'
+        de: 'Funktionen'
+        fr: 'Fonctionnalités'  
+        es: 'Características'
+      
+      'Solutions':
+        en: 'Solutions'
+        de: 'Lösungen'
+        fr: 'Solutions'
+        es: 'Soluciones'
+      
+      'API Documentation':
+        en: 'API Documentation'
+        de: 'API-Dokumentation'
+        fr: 'Documentation API'
+        es: 'Documentación API'
+      
+      'Pricing':
+        en: 'Pricing'
+        de: 'Preise'
+        fr: 'Tarifs'
+        es: 'Precios'
+      
+      'Company':
+        en: 'Company'
+        de: 'Unternehmen'
+        fr: 'Entreprise'
+        es: 'Empresa'
+      
+      'News & Blog':
+        en: 'News & Blog'
+        de: 'News & Blog'
+        fr: 'Actualités & Blog'
+        es: 'Noticias & Blog'
+      
+      'Other Resources':
+        en: 'Other Resources'
+        de: 'Weitere Ressourcen'
+        fr: 'Autres Ressources'
+        es: 'Otros Recursos'
+      
+      'Additional Resources':
+        en: 'Additional Resources'
+        de: 'Weitere Ressourcen'
+        fr: 'Ressources Supplémentaires'
+        es: 'Recursos Adicionales'
+      
+      'External Resources':
+        en: 'External Resources'
+        de: 'Externe Ressourcen'
+        fr: 'Ressources Externes'
+        es: 'Recursos Externos'
+      
+      'Optional':
+        en: 'Optional'
+        de: 'Optional'
+        fr: 'Optionnel'
+        es: 'Opcional'
+      
+      # llms-full.txt specific translations
+      'Core Features':
+        en: 'Core Features'
+        de: 'Kernfunktionen'
+        fr: 'Fonctionnalités Principales'
+        es: 'Características Principales'
+      
+      'Solutions & Use Cases':
+        en: 'Solutions & Use Cases'
+        de: 'Lösungen & Anwendungsfälle'
+        fr: 'Solutions & Cas d\'Usage'
+        es: 'Soluciones & Casos de Uso'
+      
+      'API & Developer Resources':
+        en: 'API & Developer Resources'
+        de: 'API & Entwicklerressourcen'
+        fr: 'API & Ressources Développeur'
+        es: 'API & Recursos para Desarrolladores'
+      
+      'Company Information':
+        en: 'Company Information'
+        de: 'Unternehmensinformationen'
+        fr: 'Informations sur l\'Entreprise'
+        es: 'Información de la Empresa'
+    
+    # Configure which node types should be treated as homepage/site root
+    homePageNodeTypes:
+      - 'Neos.NodeTypes:Page'
+      - 'Neos.Neos:Document'
+      # Add your custom homepage node types here:
+      # - 'Your.Package:HomePage'
+      # - 'Your.Package:LandingPage'
+    
+    # Optional fallback domain when no domain can be determined automatically
+    # fallbackDomain: 'example.com'
+    
+    # Optional site description (overrides description from site node)
+    # siteDescription: 'Your site description here'
+    # 
+    # Or language-specific descriptions:
+    # siteDescriptions:
+    #   en: 'Your English site description'
+    #   de: 'Your German site description'
+    
+    # Exclusions for llms-full.txt - prevent specific pages from being included
+    fullContentExclusions:
+      pathPatterns:
+        - '/legal/*'
+        - '/privacy/*'
+        - '/terms/*'
+        - '/impress*'
+        - '/datenschutz*'
+        # Add more path patterns as needed
+      nodeTypes:
+        # - 'Your.Package:LegalPage'
+        # - 'Your.Package:PrivacyPage'
+      excludeHidden: true      # Exclude hidden pages (default: true)
+      excludeFooterPages: true # Exclude footer pages (default: true)
+    
+    # Additional content sections
+    # additionalContent:
+    #   simple:  # For llms.txt
+    #     'Custom Section Title': |
+    #       Additional content for your site...
+    #   full:    # For llms-full.txt
+    #     'Technical Details': |
+    #       Detailed technical information...
+
+# Flow configuration remains the same
+Neos:
+  Flow:
+    persistence:
+      doctrine:
+        migrations:
+          ignoredTables:
+            '^passcreator_llm_file_hashes$': true
+    security:
+      authentication:
+        providers:
+          'Neos.Neos:Backend':
+            requestPatterns:
+              'Passcreator.GenerativeEngineOptimization:ControllerActions':
+                pattern: 'ControllerObjectName'
+                patternOptions:
+                  controllerObjectNamePattern: 'Passcreator\GenerativeEngineOptimization\Controller\.*'
+                  matchResult: false
+    http:
+      middlewares:
+        'llmsFiles':
+          position: 'after trustedProxies'
+          middleware: 'Passcreator\GenerativeEngineOptimization\Http\Middleware\LLMFileMiddleware'
+    mvc:
+      routes:
+        'Passcreator.GenerativeEngineOptimization':
+          position: 'before Neos.Neos'

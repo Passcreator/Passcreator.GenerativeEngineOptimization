@@ -1,0 +1,41 @@
+-
+  name: 'llms.txt'
+  uriPattern: 'llms.txt'
+  defaults:
+    '@package': 'Passcreator.GenerativeEngineOptimization'
+    '@controller': 'LLM'
+    '@action': 'llms'
+    '@format': 'txt'
+  httpMethods: ['GET']
+  appendExceedingArguments: false
+  
+-
+  name: 'llms-full.txt'
+  uriPattern: 'llms-full.txt'
+  defaults:
+    '@package': 'Passcreator.GenerativeEngineOptimization'
+    '@controller': 'LLM'
+    '@action': 'llmsFull'
+    '@format': 'txt'
+  httpMethods: ['GET']
+  appendExceedingArguments: false
+  
+-
+  name: 'llms-regenerate'
+  uriPattern: 'llms-regenerate'
+  defaults:
+    '@package': 'Passcreator.GenerativeEngineOptimization'
+    '@controller': 'LLM'
+    '@action': 'regenerate'
+    '@format': 'txt'
+  httpMethods: ['GET']
+  
+-
+  name: 'llms-test'
+  uriPattern: 'llms-test'
+  defaults:
+    '@package': 'Passcreator.GenerativeEngineOptimization'
+    '@controller': 'LLM'
+    '@action': 'test'
+    '@format': 'html'
+  httpMethods: ['GET']

@@ -1,0 +1,28 @@
+{
+    "name": "passcreator/generativeengineoptimization",
+    "type": "neos-package",
+    "description": "Generative Engine Optimization for Neos CMS - Generate llms.txt and llms-full.txt files for AI/LLM consumption",
+    "license": "MIT",
+    "keywords": ["neos", "flow", "llm", "ai", "seo", "generative-engine-optimization", "llms.txt"],
+    "authors": [
+        {
+            "name": "Passcreator Team",
+            "email": "support@passcreator.com"
+        }
+    ],
+    "require": {
+        "neos/flow": "~7.3 || ~8.0",
+        "neos/neos": "~7.3 || ~8.0",
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Passcreator\\GenerativeEngineOptimization\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Passcreator.GenerativeEngineOptimization"
+        }
+    }
+}

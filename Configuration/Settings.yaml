@@ -1,0 +1,193 @@
+Passcreator:
+  GenerativeEngineOptimization:
+    storage:
+      collection: 'persistent'
+    
+    # Passcreator-specific fallback content
+    fallbacks:
+      siteDescription: 'Digital wallet platform for creating and managing passes for Apple Wallet and Google Wallet'
+      homePageTitle:
+        en: 'Homepage'
+        de: 'Startseite'
+    
+    # Language detection configuration for Passcreator
+    languageDetection:
+      strategy: 'path'
+      defaultLanguage: 'de'  # Passcreator defaults to German
+      pathPatterns:
+        en: ['/en/', '/english/']
+        de: ['/de/', '/deutsch/']
+    
+    # Passcreator page categorization rules
+    categorization:
+      defaultCategory: 'Additional Resources'
+      categories:
+        'Main Pages':
+          priority: 5
+          matchers:
+            - type: 'parentRelation'
+              relation: 'directChild'
+        'Features':
+          priority: 10
+          matchers:
+            - type: 'path'
+              patterns: ['/features/', '/feature/']
+            - type: 'property'
+              property: 'nodeType'
+              values: ['features']
+        'Solutions':
+          priority: 20
+          matchers:
+            - type: 'path'
+              patterns: ['/solutions/', '/solution/']
+            - type: 'property'
+              property: 'nodeType'
+              values: ['solutions']
+        'API Documentation':
+          priority: 30
+          matchers:
+            - type: 'path'
+              patterns: ['/api/', '/api-documentation/']
+            - type: 'property'
+              property: 'nodeType'
+              values: ['api']
+        'Pricing':
+          priority: 40
+          matchers:
+            - type: 'path'
+              patterns: ['/pricing/', '/prices/']
+            - type: 'property'
+              property: 'nodeType'
+              values: ['pricing']
+    
+    # Content grouping for llms-full.txt
+    fullContentGrouping:
+      'Core Features':
+        priority: 10
+        matchers:
+          - type: 'path'
+            patterns: ['/features/']
+          - type: 'property'
+            property: 'nodeType'
+            values: ['features']
+      'Solutions':
+        priority: 20
+        matchers:
+          - type: 'path'
+            patterns: ['/solutions/']
+          - type: 'property'
+            property: 'nodeType'
+            values: ['solutions']
+      'API & Developer Resources':
+        priority: 30
+        matchers:
+          - type: 'path'
+            patterns: ['/api/', '/developer/']
+          - type: 'property'
+            property: 'nodeType'
+            values: ['api']
+      'Company Information':
+        priority: 40
+        matchers:
+          - type: 'path'
+            patterns: ['/about/', '/company/']
+          - type: 'property'
+            property: 'nodeType'
+            values: ['about', 'company']
+      'Other Resources':
+        priority: 100
+        matchers:
+          - type: 'always'
+    
+    # Passcreator translations (German/English)
+    translations:
+      'Main Pages':
+        en: 'Main Pages'
+        de: 'Hauptseiten'
+      'Features':
+        en: 'Features'
+        de: 'Funktionen'
+      'Solutions':
+        en: 'Solutions'
+        de: 'Lösungen'
+      'API Documentation':
+        en: 'API Documentation'
+        de: 'API-Dokumentation'
+      'Pricing':
+        en: 'Pricing'
+        de: 'Preise'
+      'Additional Resources':
+        en: 'Additional Resources'
+        de: 'Weitere Ressourcen'
+      'Optional':
+        en: 'Optional'
+        de: 'Optional'
+      'External Resources':
+        en: 'External Resources'
+        de: 'Externe Ressourcen'
+      'Core Features':
+        en: 'Core Features'
+        de: 'Kernfunktionen'
+      'API & Developer Resources':
+        en: 'API & Developer Resources'
+        de: 'API & Entwicklerressourcen'
+      'Company Information':
+        en: 'Company Information'
+        de: 'Unternehmensinformationen'
+      'Other Resources':
+        en: 'Other Resources'
+        de: 'Weitere Ressourcen'
+    
+    # Configure which node types should be treated as homepage/site root
+    homePageNodeTypes:
+      - 'Neos.NodeTypes:Page'
+      - 'Neos.Neos:Document'
+      - 'Brainswarm.PasscreatorDe:HomePage'
+      - 'Brainswarm.PasscreatorDe:Landingpage'
+    
+    # Passcreator fallback domain
+    fallbackDomain: 'passcreator.com'
+    
+    # Exclusions for llms-full.txt
+    fullContentExclusions:
+      pathPatterns:
+        - '/legal/*'
+        - '/privacy/*'
+        - '/terms/*'
+        - '/impress*'
+        - '/datenschutz*'
+        - '/agb*'
+      nodeTypes:
+        - 'Your.Package:LegalPage'
+        - 'Your.Package:PrivacyPage'
+      # excludeHidden: true  # Whether to exclude hidden pages (default: true)
+      # excludeFooterPages: true  # Whether to exclude footer pages (default: true)
+Neos:
+  Flow:
+    persistence:
+      doctrine:
+        migrations:
+          ignoredTables:
+            # Ignore custom tables from doctrine migrations, so that the "doctrine:migrationgenerate" doesn't create
+            # a migration that drops the table because there is no corresponding domain model.
+            '^passcreator_llm_file_hashes$': true
+    security:
+      authentication:
+        providers:
+          'Neos.Neos:Backend':
+            requestPatterns:
+              'Passcreator.GenerativeEngineOptimization:ControllerActions':
+                pattern: 'ControllerObjectName'
+                patternOptions:
+                  controllerObjectNamePattern: 'Passcreator\GenerativeEngineOptimization\Controller\.*'
+                  matchResult: false
+    http:
+      middlewares:
+        'llmsFiles':
+          position: 'after trustedProxies'
+          middleware: 'Passcreator\GenerativeEngineOptimization\Http\Middleware\LLMFileMiddleware'
+          
+    mvc:
+      routes:
+        'Passcreator.GenerativeEngineOptimization':
+          position: 'before Neos.Neos'

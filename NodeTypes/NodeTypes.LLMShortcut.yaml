@@ -1,0 +1,38 @@
+'Passcreator.GenerativeEngineOptimization:LLMShortcutMixin':
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        llmShortcut:
+          label: 'LLM Shortcut Settings'
+          position: 110
+          icon: 'icon-external-link'
+          tab: 'meta'
+  properties:
+    llmIncludeShortcut:
+      type: boolean
+      defaultValue: false
+      ui:
+        label: 'Include Shortcut in llms.txt'
+        help:
+          message: 'Include this shortcut link in the llms.txt file'
+        reloadIfChanged: false
+        inspector:
+          group: 'llmShortcut'
+    llmShortcutDescription:
+      type: string
+      ui:
+        label: 'Shortcut Description for LLM'
+        help:
+          message: 'Description of the external link/shortcut for llms.txt'
+        reloadIfChanged: false
+        inspector:
+          group: 'llmShortcut'
+          editor: 'Neos.Neos/Inspector/Editors/TextAreaEditor'
+          editorOptions:
+            rows: 3
+            placeholder: 'Describe what this external link provides...'
+
+'Neos.Neos:Shortcut':
+  superTypes:
+    'Passcreator.GenerativeEngineOptimization:LLMShortcutMixin': true
