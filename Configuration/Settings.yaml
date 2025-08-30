@@ -2,166 +2,204 @@ Passcreator:
   GenerativeEngineOptimization:
     storage:
       collection: 'persistent'
-    
-    # Passcreator-specific fallback content
-    fallbacks:
-      siteDescription: 'Digital wallet platform for creating and managing passes for Apple Wallet and Google Wallet'
-      homePageTitle:
-        en: 'Homepage'
-        de: 'Startseite'
-    
-    # Language detection configuration for Passcreator
-    languageDetection:
-      strategy: 'path'
-      defaultLanguage: 'de'  # Passcreator defaults to German
-      pathPatterns:
-        en: ['/en/', '/english/']
-        de: ['/de/', '/deutsch/']
-    
-    # Passcreator page categorization rules
-    categorization:
-      defaultCategory: 'Additional Resources'
-      categories:
-        'Main Pages':
-          priority: 5
-          matchers:
-            - type: 'parentRelation'
-              relation: 'directChild'
-        'Features':
-          priority: 10
-          matchers:
-            - type: 'path'
-              patterns: ['/features/', '/feature/']
-            - type: 'property'
-              property: 'nodeType'
-              values: ['features']
-        'Solutions':
-          priority: 20
-          matchers:
-            - type: 'path'
-              patterns: ['/solutions/', '/solution/']
-            - type: 'property'
-              property: 'nodeType'
-              values: ['solutions']
-        'API Documentation':
-          priority: 30
-          matchers:
-            - type: 'path'
-              patterns: ['/api/', '/api-documentation/']
-            - type: 'property'
-              property: 'nodeType'
-              values: ['api']
-        'Pricing':
-          priority: 40
-          matchers:
-            - type: 'path'
-              patterns: ['/pricing/', '/prices/']
-            - type: 'property'
-              property: 'nodeType'
-              values: ['pricing']
-    
-    # Content grouping for llms-full.txt
-    fullContentGrouping:
-      'Core Features':
-        priority: 10
-        matchers:
-          - type: 'path'
-            patterns: ['/features/']
-          - type: 'property'
-            property: 'nodeType'
-            values: ['features']
-      'Solutions':
-        priority: 20
-        matchers:
-          - type: 'path'
-            patterns: ['/solutions/']
-          - type: 'property'
-            property: 'nodeType'
-            values: ['solutions']
-      'API & Developer Resources':
-        priority: 30
-        matchers:
-          - type: 'path'
-            patterns: ['/api/', '/developer/']
-          - type: 'property'
-            property: 'nodeType'
-            values: ['api']
-      'Company Information':
-        priority: 40
-        matchers:
-          - type: 'path'
-            patterns: ['/about/', '/company/']
-          - type: 'property'
-            property: 'nodeType'
-            values: ['about', 'company']
-      'Other Resources':
-        priority: 100
-        matchers:
-          - type: 'always'
-    
-    # Passcreator translations (German/English)
-    translations:
-      'Main Pages':
-        en: 'Main Pages'
-        de: 'Hauptseiten'
-      'Features':
-        en: 'Features'
-        de: 'Funktionen'
-      'Solutions':
-        en: 'Solutions'
-        de: 'Lösungen'
-      'API Documentation':
-        en: 'API Documentation'
-        de: 'API-Dokumentation'
-      'Pricing':
-        en: 'Pricing'
-        de: 'Preise'
-      'Additional Resources':
-        en: 'Additional Resources'
-        de: 'Weitere Ressourcen'
-      'Optional':
-        en: 'Optional'
-        de: 'Optional'
-      'External Resources':
-        en: 'External Resources'
-        de: 'Externe Ressourcen'
-      'Core Features':
-        en: 'Core Features'
-        de: 'Kernfunktionen'
-      'API & Developer Resources':
-        en: 'API & Developer Resources'
-        de: 'API & Entwicklerressourcen'
-      'Company Information':
-        en: 'Company Information'
-        de: 'Unternehmensinformationen'
-      'Other Resources':
-        en: 'Other Resources'
-        de: 'Weitere Ressourcen'
-    
-    # Configure which node types should be treated as homepage/site root
-    homePageNodeTypes:
-      - 'Neos.NodeTypes:Page'
-      - 'Neos.Neos:Document'
-      - 'Brainswarm.PasscreatorDe:HomePage'
-      - 'Brainswarm.PasscreatorDe:Landingpage'
-    
-    # Passcreator fallback domain
-    fallbackDomain: 'passcreator.com'
-    
-    # Exclusions for llms-full.txt
-    fullContentExclusions:
-      pathPatterns:
-        - '/legal/*'
-        - '/privacy/*'
-        - '/terms/*'
-        - '/impress*'
-        - '/datenschutz*'
-        - '/agb*'
-      nodeTypes:
-        - 'Your.Package:LegalPage'
-        - 'Your.Package:PrivacyPage'
-      # excludeHidden: true  # Whether to exclude hidden pages (default: true)
-      # excludeFooterPages: true  # Whether to exclude footer pages (default: true)
+#
+#    # Fallback content
+#    fallbacks:
+#      siteDescription: 'Digital wallet platform for creating and managing passes for Apple Wallet and Google Wallet'
+#      homePageTitle:
+#        en: 'Homepage'
+#        de: 'Startseite'
+#
+#    # Language detection configuration
+#    languageDetection:
+#      strategy: 'path'
+#      defaultLanguage: 'de'
+#      pathPatterns:
+#        en: ['/en/', '/english/']
+#        de: ['/de/', '/deutsch/']
+#
+#    # Page categorization rules - Updated for comprehensive page inclusion
+#    categorization:
+#      defaultCategory: 'Additional Resources'
+#      categories:
+#        'Main Pages':
+#          priority: 5
+#          matchers:
+#            - type: 'parentRelation'
+#              relation: 'directChild'
+#            - type: 'path'
+#              patterns: ['/en/', '/de/', '/']
+#        'Features':
+#          priority: 10
+#          matchers:
+#            - type: 'path'
+#              patterns: ['/features/', '/feature/', '/funktionen/']
+#            - type: 'property'
+#              property: 'nodeType'
+#              values: ['Brainswarm.PasscreatorDe:Feature']
+#            - type: 'title'
+#              patterns: ['Feature', 'Funktion']
+#        'Solutions':
+#          priority: 15
+#          matchers:
+#            - type: 'path'
+#              patterns: ['/solutions/', '/solution/', '/loesungen/', '/loesung/', '/use-cases/', '/case-studies/']
+#            - type: 'property'
+#              property: 'nodeType'
+#              values: ['Brainswarm.PasscreatorDe:Solution']
+#        'Use Cases':
+#          priority: 20
+#          matchers:
+#            - type: 'path'
+#              patterns: ['/use-cases/', '/case-studies/', '/anwendungsfaelle/']
+#        'API Documentation':
+#          priority: 30
+#          matchers:
+#            - type: 'path'
+#              patterns: ['/api/', '/api-documentation/', '/developer/', '/docs/']
+#            - type: 'property'
+#              property: 'nodeType'
+#              values: ['api']
+#        'Pricing':
+#          priority: 40
+#          matchers:
+#            - type: 'path'
+#              patterns: ['/pricing/', '/prices/', '/preise/']
+#            - type: 'property'
+#              property: 'nodeType'
+#              values: ['pricing']
+#        'Company':
+#          priority: 50
+#          matchers:
+#            - type: 'path'
+#              patterns: ['/company/', '/about/', '/unternehmen/', '/ueber-uns/', '/news/', '/blog/', '/press/']
+#            - type: 'property'
+#              property: 'nodeType'
+#              values: ['Passcreator.Example:NewsArticle']
+#        'Login & Signup':
+#          priority: 60
+#          matchers:
+#            - type: 'path'
+#              patterns: ['/login/', '/signup/', '/sign-up/', '/register/', '/anmelden/', '/registrieren/']
+#
+#    # Content grouping for llms-full.txt
+#    fullContentGrouping:
+#      'Core Features':
+#        priority: 10
+#        matchers:
+#          - type: 'path'
+#            patterns: ['/features/']
+#          - type: 'property'
+#            property: 'nodeType'
+#            values: ['features']
+#      'Solutions':
+#        priority: 20
+#        matchers:
+#          - type: 'path'
+#            patterns: ['/solutions/']
+#          - type: 'property'
+#            property: 'nodeType'
+#            values: ['solutions']
+#      'API & Developer Resources':
+#        priority: 30
+#        matchers:
+#          - type: 'path'
+#            patterns: ['/api/', '/developer/']
+#          - type: 'property'
+#            property: 'nodeType'
+#            values: ['api']
+#      'Company Information':
+#        priority: 40
+#        matchers:
+#          - type: 'path'
+#            patterns: ['/about/', '/company/']
+#          - type: 'property'
+#            property: 'nodeType'
+#            values: ['about', 'company']
+#      'Other Resources':
+#        priority: 100
+#        matchers:
+#          - type: 'always'
+#
+#    # Translations (German/English)
+#    translations:
+#      'Main Pages':
+#        en: 'Main Pages'
+#        de: 'Hauptseiten'
+#      'Features':
+#        en: 'Features'
+#        de: 'Funktionen'
+#      'Solutions':
+#        en: 'Solutions'
+#        de: 'Lösungen'
+#      'API Documentation':
+#        en: 'API Documentation'
+#        de: 'API-Dokumentation'
+#      'Pricing':
+#        en: 'Pricing'
+#        de: 'Preise'
+#      'Additional Resources':
+#        en: 'Additional Resources'
+#        de: 'Weitere Ressourcen'
+#      'Optional':
+#        en: 'Optional'
+#        de: 'Optional'
+#      'External Resources':
+#        en: 'External Resources'
+#        de: 'Externe Ressourcen'
+#      'Core Features':
+#        en: 'Core Features'
+#        de: 'Kernfunktionen'
+#      'API & Developer Resources':
+#        en: 'API & Developer Resources'
+#        de: 'API & Entwicklerressourcen'
+#      'Company Information':
+#        en: 'Company Information'
+#        de: 'Unternehmensinformationen'
+#      'Other Resources':
+#        en: 'Other Resources'
+#        de: 'Weitere Ressourcen'
+#
+#    # Configure which node types should be treated as homepage/site root
+#    # IMPORTANT: This list is used to skip nodes when building URLs to avoid /home segments
+#    homePageNodeTypes:
+#      - 'Passcreator.Example:HomePage'  # This is the actual homepage node type that needs to be skipped
+#
+#    # Additional configuration to handle URL generation properly
+#    skipPathSegments:
+#      - 'home'  # Skip nodes with 'home' as uriPathSegment to avoid /home/ in URLs
+#
+#    # Enable all page types for inclusion
+#    includedNodeTypes:
+#      - 'Neos.NodeTypes:Page'
+#      - 'Neos.Neos:Document'
+#
+#    # fallback domain
+#    fallbackDomain: 'www.passcreator.com'
+#
+#    # Include all pages by default - minimal exclusions
+#    pageInclusion:
+#      includeHiddenPages: false  # Don't include hidden pages
+#      includeFooterPages: false   # Include footer pages for comprehensive coverage
+#      includeAllPublishedPages: true  # Include all published pages
+#
+#    # Minimal exclusions for llms.txt and llms-full.txt
+#    exclusions:
+#      pathPatterns:
+#        - '/neos/*'
+#        - '/@*'
+#        - '/login/*'
+#        - '/logout/*'
+#      nodeTypes: []  # Don't exclude any node types by default
+#
+#    # Exclusions for llms-full.txt only (more permissive than llms.txt)
+#    fullContentExclusions:
+#      pathPatterns:
+#        - '/neos/*'
+#        - '/@*'
+#      nodeTypes: []
+#      excludeHidden: true  # Whether to exclude hidden pages (default: true)
+#      excludeFooterPages: true  # Include footer pages in full content
 Neos:
   Flow:
     persistence:
